@@ -1,0 +1,136 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Example</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center the large button vertically */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #0023a0; /* Background color */
+            position: relative; /* Required for absolute positioning of bottom buttons */
+        }
+
+        .large-button-container {
+            display: flex;
+            justify-content: center; /* Center the large button horizontally */
+            width: 100%;
+            padding: 20px 0; /* Space around the button */
+        }
+
+        .bottom-buttons-container {
+            display: flex;
+            justify-content: center; /* Center buttons horizontally */
+            gap: 20px; /* Space between buttons */
+            position: absolute; /* Position relative to the body */
+            bottom: 20px; /* Distance from the bottom of the screen */
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            background-color: #28a745; /* Green color */
+            color: white;
+            transition: background-color 0.3s, transform 0.1s;
+            border-radius: 12px; /* Rounded edges */
+        }
+
+        /* Apply the visual effect only when the button is pressed */
+        button:active {
+            background-color: #218838; /* Darker green when clicked */
+            transform: scale(0.95);
+        }
+
+        .large-button {
+            padding: 20px 40px;
+            font-size: 28px;
+            border: none;
+            cursor: pointer;
+            background-color: #28a745; /* Green color */
+            color: white;
+            transition: background-color 0.3s, transform 0.1s;
+            border-radius: 12px; /* Rounded edges */
+            width: 300px; /* Wider button */
+            text-align: center; /* Center text */
+        }
+    </style>
+</head>
+<body>
+    <div class="large-button-container">
+        <button id="largeButton" class="large-button">Play Now</button>
+    </div>
+    <div class="bottom-buttons-container">
+        <button id="originalButton1" data-url="https://mathisedcational5.vercel.app/">Backup 1</button>
+        <button id="originalButton2" data-url="https://mathlearning-isfun.netlify.app/">Backup 2</button>
+        <button id="clonedButton" data-url="https://drive.google.com/uc?export=download&amp;id=1pjkDa96KQyyFasDccfs57eFDm8iwuGI8">Download 1.8.8</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const largeButton = document.getElementById('largeButton');
+            const bottomButtons = document.querySelectorAll('.bottom-buttons-container button');
+            const largeButtonURL = "https://eaglercraft.me/"; // Specify URL here
+
+            // Function to handle button clicks
+            function handleClick(event) {
+                const url = event.currentTarget.getAttribute('data-url');
+                
+                // Check if the clicked button is the largeButton
+                if (event.currentTarget === largeButton) {
+                    // Open the large button URL in a new blank tab with an iframe
+                    const win = window.open('about:blank', '_blank');
+                    win.document.open();
+                    win.document.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <style>
+                                body {
+                                    margin: 0;
+                                    height: 100vh;
+                                    overflow: hidden;
+                                }
+                                iframe {
+                                    border: none;
+                                    width: 100%;
+                                    height: 100%;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <iframe src="${largeButtonURL}"></iframe>
+                        </body>
+                        </html>
+                    `);
+                    win.document.close();
+                } else {
+                    // Open the URL in a normal new tab
+                    window.open(url, '_blank');
+                }
+
+                // Change button appearance
+                event.currentTarget.classList.add('clicked');
+
+                // Remove the 'clicked' class after a short delay to reset the button appearance
+                setTimeout(() => {
+                    event.currentTarget.classList.remove('clicked');
+                }, 100); // Adjust delay as needed
+            }
+
+            // Apply the click event listener to the large button
+            largeButton.onclick = () => handleClick({currentTarget: largeButton});
+
+            // Apply the click event listener to each small button
+            bottomButtons.forEach(button => {
+                button.onclick = handleClick;
+            });
+        });
+    </script>
+
+
+
+</body></html>
